@@ -1,16 +1,9 @@
 import { useState } from 'react'
 
-const App = () => {
-  // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+// a proper place to define a component
+const Statistics = ({good, neutral, bad}) => {
 
-  const handleClick = (setFeedback) => {
-    setFeedback(prev => prev + 1)
-  }
-
- const countAll = () => {
+   const countAll = () => {
       return good + neutral + bad
   }
 
@@ -43,6 +36,31 @@ const App = () => {
   }
 
 
+  return(
+    <div id="statistics">
+          <h2>statistics</h2>
+      <div>good {good}</div>
+      <div>neutral {neutral}</div>
+      <div>bad {bad}</div>
+      <div>all {countAll()}</div>
+      <div>average {countAverage()}</div>
+      <div>positive {positivePercentage()}</div>
+    </div>
+  )
+}
+
+
+const App = () => {
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  const handleClick = (setFeedback) => {
+    setFeedback(prev => prev + 1)
+  }
+
+
   return (
     <>
     <div id="feedback">
@@ -53,16 +71,8 @@ const App = () => {
       <button onClick={() => handleClick(setBad)}>bad</button>
     </div>
 
-    <div id="statistics">
-          <h2>statistics</h2>
-      <div>good {good}</div>
-      <div>neutral {neutral}</div>
-      <div>bad {bad}</div>
-      <div>all {countAll()}</div>
-      <div>average {countAverage()}</div>
-      <div>positive {positivePercentage()}</div>
-    </div>
-    </>
+    <Statistics good={good} neutral={neutral} bad={bad}></Statistics>
+        </>
   )
 }
 
