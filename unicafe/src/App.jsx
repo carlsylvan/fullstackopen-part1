@@ -1,6 +1,21 @@
 import { useState } from 'react'
 
 // a proper place to define a component
+const Button = ({text, onClick}) => {
+
+  return(
+    <button onClick={onClick}>
+      {text}
+    </button>
+  )
+}
+
+const StatisticLine = ({text, value}) => {
+  return(
+        <div>{text} {value}</div>
+  )
+}
+
 const Statistics = ({good, neutral, bad}) => {
 
    const countAll = () => {
@@ -25,25 +40,23 @@ const Statistics = ({good, neutral, bad}) => {
   ) / totalScore
   }
 
-
   const positivePercentage = () => {
 
     const totalScore = good + neutral + bad
 
     if (totalScore === 0) return 0
 
-    return (good / totalScore) * 100
-  }
-
+    return (good / totalScore) * 100 + " %"
+    }
 
   return(
     <div>
-      <div>good {good}</div>
-      <div>neutral {neutral}</div>
-      <div>bad {bad}</div>
-      <div>all {countAll()}</div>
-      <div>average {countAverage()}</div>
-      <div>positive {positivePercentage()} %</div>
+      <StatisticLine text="good" value={good}></StatisticLine>
+      <StatisticLine text="neutral" value={neutral}></StatisticLine>
+      <StatisticLine text="bad" value={bad}></StatisticLine>
+      <StatisticLine text="all" value={countAll()}></StatisticLine>
+      <StatisticLine text="average" value={countAverage()}></StatisticLine>
+      <StatisticLine text="positive" value={positivePercentage()}></StatisticLine>
     </div>
   )
 }
@@ -65,19 +78,19 @@ const App = () => {
     <div id="feedback">
         <h2>give feedback</h2>
 
-      <button onClick={() => handleClick(setGood)}>good</button>
-      <button onClick={() => handleClick(setNeutral)}>neutral</button>
-      <button onClick={() => handleClick(setBad)}>bad</button>
+      <Button text="good" onClick={() => handleClick(setGood)}></Button>
+      <Button text="neutral" onClick={() => handleClick(setNeutral)}></Button>
+      <Button text="bad" onClick={() => handleClick(setBad)}></Button>
     </div>
 
-        <div id="statistics">
-          <h2>statistics</h2>
+    <div id="statistics">
+        <h2>statistics</h2>
 
     {good + neutral + bad === 0 ? <div>No feedback given</div> :
     <Statistics good={good} neutral={neutral} bad={bad}></Statistics>
     }
     </div>
-        </>
+    </>
   )
 }
 
